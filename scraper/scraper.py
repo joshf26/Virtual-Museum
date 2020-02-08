@@ -16,7 +16,7 @@ class Scraper:
         """ Returns a BeautifulSoup of the specified path. """
 
         return BeautifulSoup(requests.get('https://kids.kiddle.co/{}'.format(path)).text, 'html.parser')
-    #elizabeth
+
     def get_topics(self):
         # topics format    topic url : image url
         names = self.request('').select_one('#mw-content-text').select('ol a')
@@ -36,22 +36,15 @@ class Scraper:
             if topic['href'] == '/Beer': imageURL = '/images/thumb/d/d7/Lager_beer_in_glass.jpg/300px-Lager_beer_in_glass.jpg'
             if topic['href'] == '/Mathematics': imageURL = '/images/thumb/2/21/Euclid.jpg/300px-Euclid.jpg'
             if topic['href'] == '/Technology': imageURL = '/images/thumb/4/45/Leonardo-Robot3.jpg/300px-Leonardo-Robot3.jpg'
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
             self.topics.update({topic['href'] : imageURL})
-            print (topic['href'])
-            print (self.topics[topic['href']])
+            # print (topic['href'])
+            # print (self.topics[topic['href']])
         #print (self.topics)
         return self.topics
-    
-    def get_images_captions(self):
-        #return a dictionary of image url : caption 
-        #isolate each "gallery-box" then get image and "gallery-text"
-        
-        return self.images
-    
 
     def get_exhibit_name(self, topic):
         for name in self.request(topic).find_all('span', class_='mw-headline'):
@@ -63,6 +56,12 @@ class Scraper:
             #     print(child)
         # exhibit_name = self.request(topic).find_all('span', class_='mw-headline').get_text()
         print(*self.exhibit_name)
+    
+    def get_images_captions(self):
+        #return a dictionary of image url : caption 
+        #isolate each "gallery-box" then get image and "gallery-text"
+        
+        return self.images
 
     def get_text(self):
         pass
