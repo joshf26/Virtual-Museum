@@ -49,25 +49,25 @@ class Scraper:
             elif topic['href'] == '/History': image_url = '/images/thumb/4/4e/History-Dielman-Highsmith.jpeg/971px-History-Dielman-Highsmith.jpeg'
             elif topic['href'] == '/Prehistory': image_url = '/images/9/99/Great_Sphinx_of_Giza_2.jpg'
             elif topic['href'] == '/Geography': image_url = '/images/thumb/1/12/World_map_2004_CIA_large_1.7m_whitespace_removed.jpg/800px-World_map_2004_CIA_large_1.7m_whitespace_removed.jpg'
-            elif topic['href'] == '/Continents': image_url = '/images/thumb/0/0f/LocationAfrica.png/300px-LocationAfrica.png'
-            elif topic['href'] == '/Countries': image_url = '/images/thumb/1/19/Afghanistan_%28orthographic_projection%29.svg/350px-Afghanistan_%28orthographic_projection%29.svg.png'
-            elif topic['href'] == '/Cities': image_url = '/images/thumb/6/6d/Flag_of_Amsterdam.svg/180px-Flag_of_Amsterdam.svg.png 1.5x, /images/thumb/6/6d/Flag_of_Amsterdam.svg/240px-Flag_of_Amsterdam.svg.png 2x'
-            elif topic['href'] == '/Bodies_of_water': image_url = '/images/thumb/6/6f/Mouths_of_amazon_geocover_1990.png/300px-Mouths_of_amazon_geocover_1990.png'
-            elif topic['href'] == '/Mountain_and_desert': image_url = '/images/thumb/0/0d/L%C3%BCnersee_vom_Saulakopf_1.JPG/200px-L%C3%BCnersee_vom_Saulakopf_1.JPG'
-            elif topic['href'] == '/Biography': image_url = '/images/thumb/a/a8/Sarah_Bernhardt_-_Project_Gutenberg_eText_19955.jpg/200px-Sarah_Bernhardt_-_Project_Gutenberg_eText_19955.jpg'
-            elif topic['href'] == '/Inventors': image_url = '/images/thumb/2/2b/Archimedes_%28Idealportrait%29.jpg/541px-Archimedes_%28Idealportrait%29.jpg'
-            elif topic['href'] == '/Composers': image_url = '/images/thumb/6/6f/Beethoven.jpg/300px-Beethoven.jpg'
-            elif topic['href'] == '/Explorers': image_url = '/images/thumb/0/06/CristobalColon.jpg/300px-CristobalColon.jpg'
-            elif topic['href'] == '/Philosophy': image_url = '/images/thumb/a/a4/Socrates_Louvre.jpg/300px-Socrates_Louvre.jpg'
-            elif topic['href'] == '/Psychology': image_url = '/images/thumb/b/b4/Sixteen_faces_expressing_the_human_passions._Wellcome_L0068375_%28cropped%29.jpg/180px-Sixteen_faces_expressing_the_human_passions._Wellcome_L0068375_%28cropped%29.jpg'
-            elif topic['href'] == '/Religion': image_url = '/images/thumb/5/50/Brahma_Halebid.jpg/334px-Brahma_Halebid.jpg'
-            elif topic['href'] == '/Family': image_url = '/images/thumb/e/e5/Paus_family_portrait_NFB-18645.jpg/300px-Paus_family_portrait_NFB-18645.jpg'
+            elif topic['href'] == '/Africa': image_url = '/images/thumb/0/0f/LocationAfrica.png/300px-LocationAfrica.png'
+            elif topic['href'] == '/Afghanistan': image_url = '/images/thumb/1/19/Afghanistan_%28orthographic_projection%29.svg/350px-Afghanistan_%28orthographic_projection%29.svg.png'
+            elif topic['href'] == '/Amsterdam': image_url = '/images/thumb/6/6d/Flag_of_Amsterdam.svg/180px-Flag_of_Amsterdam.svg.png 1.5x, /images/thumb/6/6d/Flag_of_Amsterdam.svg/240px-Flag_of_Amsterdam.svg.png 2x'
+            elif topic['href'] == '/Amazon_River': image_url = '/images/thumb/6/6f/Mouths_of_amazon_geocover_1990.png/300px-Mouths_of_amazon_geocover_1990.png'
+            elif topic['href'] == '/Alps': image_url = '/images/thumb/0/0d/L%C3%BCnersee_vom_Saulakopf_1.JPG/200px-L%C3%BCnersee_vom_Saulakopf_1.JPG'
+            elif topic['href'] == '/Sarah_Bernhardt': image_url = '/images/thumb/a/a8/Sarah_Bernhardt_-_Project_Gutenberg_eText_19955.jpg/200px-Sarah_Bernhardt_-_Project_Gutenberg_eText_19955.jpg'
+            elif topic['href'] == '/Louis_Armstrong': image_url = '/images/thumb/6/6f/Beethoven.jpg/300px-Beethoven.jpg'
+            elif topic['href'] == '/Roald_Amundsen': image_url = '/images/thumb/0/06/CristobalColon.jpg/300px-CristobalColon.jpg'
+            elif topic['href'] == '/Archimedes': image_url = '/images/thumb/2/2b/Archimedes_%28Idealportrait%29.jpg/541px-Archimedes_%28Idealportrait%29.jpg'
+            elif topic['href'] == '/Aristotle': image_url = '/images/thumb/a/a4/Socrates_Louvre.jpg/300px-Socrates_Louvre.jpg'
+            elif topic['href'] == '/Behavior': image_url = '/images/thumb/b/b4/Sixteen_faces_expressing_the_human_passions._Wellcome_L0068375_%28cropped%29.jpg/180px-Sixteen_faces_expressing_the_human_passions._Wellcome_L0068375_%28cropped%29.jpg'
+            elif topic['href'] == '/God': image_url = '/images/thumb/5/50/Brahma_Halebid.jpg/334px-Brahma_Halebid.jpg'
             elif topic['href'] == '/Society': image_url = '/images/thumb/f/f8/Detail_of_Les_tres_riches_heures_-_March.jpg/699px-Detail_of_Les_tres_riches_heures_-_March.jpg'
+            elif topic['href'] == '/Family': image_url = '/images/thumb/e/e5/Paus_family_portrait_NFB-18645.jpg/300px-Paus_family_portrait_NFB-18645.jpg'
             elif topic['href'] == '/Language': image_url = '/images/thumb/5/53/Novi_Sad_mayor_office.jpg/300px-Novi_Sad_mayor_office.jpg'
 
             self.topics.update({topic['href'][1:] : 'https://kids.kiddle.co' + image_url})
         
-        for key in self.topics: print (key, ': \n', self.topics[key])
+        # for key in self.topics: print (key, ': \n', self.topics[key])
         
         return self.topics
 
@@ -77,6 +77,7 @@ class Scraper:
         img_list = []
         cpt_list = []
         image = ''
+        imgcpt_indx = 0
         # tags for images and headlines
         for html in self.request(topic).select_one('#mw-content-text').find_all(['div','h2','h3']):
             # if there's a headline, will always find the first headline as true
@@ -107,12 +108,16 @@ class Scraper:
                         caption = html.find('img').parent.parent.parent.find_next_sibling('div')
                         if caption is not None:
                             cpt_list.append(caption.find('p').text.strip())
+                        else:
+                            cpt_list.append("")
                     
                     # Not in the `Images for kids` exhibit
                     else:
                         caption = html.find('img').parent.find_next_sibling('div', 'thumbcaption')
                         if caption is not None:
                             cpt_list.append(caption.text.strip())
+                        else:
+                            cpt_list.append("")
 
 
         if len(img_list) > 0:
