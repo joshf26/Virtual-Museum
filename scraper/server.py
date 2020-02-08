@@ -1,17 +1,17 @@
 from bottle import route, run
-from bs4 import BeautifulSoup
+from json import dumps
 
 from scraper import Scraper
 
 
 @route('/topics')
 def topics():
-    return scraper.get_topics()
+    return dumps(scraper.get_topics())
 
 
 @route('/museum/<topic>')
 def museum(topic):
-    return scraper.get_museum(topic)
+    return dumps(scraper.get_museum(topic))
 
 
 if __name__ == '__main__':
