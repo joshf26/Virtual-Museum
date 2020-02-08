@@ -10,7 +10,7 @@ class Scraper:
         # TODO: Get topics and cache
         self.topics = {}
         self.images = {}
-        self.exhibit = {}
+        self.exhibit = []
 
     def request(self, path):
         """ Returns a BeautifulSoup of the specified path. """
@@ -72,8 +72,10 @@ class Scraper:
         return self.topics
 
     def get_exhibit(self, topic):
+        exhibit_dict = {}
         prev_exhibit = ''
         img_list = []
+        cpt_list = []
         image = ''
         # tags for images and headlines
         for html in self.request(topic).select_one('#mw-content-text').find_all(['div','h2','h3']):
@@ -83,8 +85,13 @@ class Scraper:
                 if len(img_list) == 0:
                     prev_exhibit = html.find(class_ = 'mw-headline').text
                 else:
-                    self.exhibit[prev_exhibit] = img_list
+                    exhibit_dict["exhibit_name"] = prev_exhibit
+                    exhibit_dict["imageUrl"] = img_list
+                    exhibit_dict["caption"] = cpt_list
+                    self.exhibit.append(exhibit_dict)
+                    exhibit_dict = {}
                     img_list = []
+                    cpt_list = []
                     #  store exhibit after adding previous
                     prev_exhibit = html.find(class_ = 'mw-headline').text
             # check if there's a heading to be stored, therefore images at the intro are not added
@@ -99,20 +106,26 @@ class Scraper:
                     if prev_exhibit == 'Images for kids':
                         caption = html.find('img').parent.parent.parent.find_next_sibling('div')
                         if caption is not None:
-                            print(caption.find('p').text.strip())
+                            cpt_list.append(caption.find('p').text.strip())
                     
                     # Not in the `Images for kids` exhibit
                     else:
                         caption = html.find('img').parent.find_next_sibling('div', 'thumbcaption')
                         if caption is not None:
-                            print(caption.text.strip())
+                            cpt_list.append(caption.text.strip())
 
 
         if len(img_list) > 0:
             # add the last exhibit if there are images....this also includes Images for Kids
-            self.exhibit[prev_exhibit] = img_list
+            exhibit_dict["exhibit_name"] = prev_exhibit
+            exhibit_dict["imageUrl"] = img_list
+            exhibit_dict["caption"] = cpt_list
+            self.exhibit.append(exhibit_dict)
+            exhibit_dict = {}
 
-        for key in self.exhibit: print (key, ': \n', self.exhibit[key])
+        for i in self.exhibit:
+            for key in i:
+                print(key, ' : \n',i[key], '\n')
         return self.exhibit
     
     def get_images_captions(self):
