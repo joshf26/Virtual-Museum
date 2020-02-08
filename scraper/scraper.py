@@ -145,10 +145,5 @@ class Scraper:
             self.exhibit.append(exhibit_dict)
             exhibit_dict = {}
 
-        for i in self.exhibit:
-            for key in i:
-                print(key, ' : \n',i[key], '\n')
-        return self.exhibit
-
     def get_museum(self, topic):
-        self.get_exhibit(topic)
+        return self.exhibit
