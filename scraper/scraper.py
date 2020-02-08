@@ -140,28 +140,3 @@ class Scraper:
     def get_museum(self, topic):
         #fill images
         self.get_exhibit(topic)
-        #loop through self.images, divide by 4 for now -> 0-3 images as base cases
-        #if 0-1 images -> 1 exhibit
-        return {
-            # GET mw-headline //maybe later if you we want exhibition titles 
-            'exhibit 1': [
-                {
-
-                    'imageUrl': 'image url for exhibit 1 display 1',
-                    'imageCaption': 'image caption for exhibit 1 display 1',
-                    'text': 'text for exhibit 1 display 1',
-                },
-                {
-                    'imageUrl': 'image url for exhibit 1 display 2',
-                    'imageCaption': 'image caption for exhibit 1 display 2',
-                    'text': 'text for exhibit 1 display 2',
-                },
-            ],
-            'exhibit 2': [
-                {
-                    'imageUrl': 'image url for exhibit 1',
-                    'imageCaption': 'image caption for exhibit 1',
-                    'text': 'text for exhibit 1',
-                },
-            ],
-        }
