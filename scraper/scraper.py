@@ -37,9 +37,9 @@ class Scraper:
             if topic['href'] == '/Mathematics': imageURL = '/images/thumb/2/21/Euclid.jpg/300px-Euclid.jpg'
             if topic['href'] == '/Technology': imageURL = '/images/thumb/4/45/Leonardo-Robot3.jpg/300px-Leonardo-Robot3.jpg'
             if topic['href'] == '/Communication': imageURL = '/images/b/b1/Rudy_Giuliani_speaking.jpg'
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
 
             self.topics.update({topic['href'] : imageURL})
             # print (topic['href'])
