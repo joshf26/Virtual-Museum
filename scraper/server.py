@@ -19,7 +19,7 @@ if __name__ == '__main__':
     topics()
     # museum("test")
     
-    scraper.get_exhibit_name('Dinosaur')
+    scraper.get_exhibit('Dinosaur')
     #x = scraper.request('').select_one('#mw-content-text').select('a')
     #print(*[y.text for y in x])``
 
