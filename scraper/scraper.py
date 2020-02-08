@@ -93,14 +93,24 @@ class Scraper:
             if html.find('img') and prev_exhibit != '': 
                 image = html.find('img')['src']
                 # idk images are repeated, didn't figure out why
+                image = 'https://kids.kiddle.co' + image
                 if image not in img_list:
-                    # this should also account for multiple images btwn headlines
-                    image = 'https://kids.kiddle.co' + image
                     img_list.append(image)
+
+                    if prev_exhibit == 'Images for kids':
+                        caption = html.find('img').parent.parent.parent.find_next_sibling('div')
+                        if caption is not None:
+                            print(caption.find('p').text.strip())
+                    
+                    # Not in the `Images for kids` exhibit
+                    else:
+                        caption = html.find('img').parent.find_next_sibling('div', 'thumbcaption')
+                        if caption is not None:
+                            print(caption.text.strip())
+
+
         if len(img_list) > 0:
             # add the last exhibit if there are images....this also includes Images for Kids
-            # let's just have Images for Kids as a possible exhibit for now!
-            # might be the only exhibit with multiple pics anyway
             self.exhibit[prev_exhibit] = img_list
 
         for key in self.exhibit: print (key, ': \n', self.exhibit[key])
