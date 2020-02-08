@@ -36,19 +36,53 @@ public class Network {
         callback(topics);
     }
     
-    public List<Exhibit> get_museum(string topic) {
+    public IEnumerator GetMuseum(string topic, Action<List<Exhibit>> callback) {
+        Debug.Log($"Making request to {_address}/museum/{topic}");
+        UnityWebRequest www = UnityWebRequest.Get($"{_address}/museum/{topic}");
+
+        yield return www.SendWebRequest();
+
+        var rawExhibits = new List<Dictionary<string, object>>();
+        if (www.isNetworkError) {
+            Debug.Log($"Error: {www.error}");
+        } else {
+            Debug.Log(www.downloadHandler.text);
+            rawExhibits = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(www.downloadHandler.text);
+        }
+        
         var exhibits = new List<Exhibit>();
+
+        foreach (var exhibit in rawExhibits) {
+            var displays = new List<Display>();
+
+            for (int index = 0; index < ((List<string>)exhibit["imageUrl"]).Count; ++index) {
+                displays.Add(new Display(
+                    ((List<string>)exhibit["imageUrl"])[index],
+                    ((List<string>)exhibit["caption"])[index],
+                    (string)exhibit["text"]
+                ));
+            }
+            
+            exhibits.Add(new Exhibit(
+                (string)exhibit["exhibit_name"],
+                displays
+            ));
+        }
         
         // TODO: Perform network request and format results.
-        exhibits.Add(new Exhibit("Text Exhibit 1", new List<Display>()));
-        exhibits.Add(new Exhibit("Text Exhibit 2", new List<Display>()));
-        exhibits.Add(new Exhibit("Text Exhibit 3", new List<Display>()));
-        exhibits.Add(new Exhibit("Text Exhibit 4", new List<Display>()));
-        exhibits.Add(new Exhibit("Text Exhibit 5", new List<Display>()));
-        exhibits.Add(new Exhibit("Text Exhibit 6", new List<Display>()));
-        exhibits.Add(new Exhibit("Text Exhibit 7", new List<Display>()));
-        exhibits.Add(new Exhibit("Text Exhibit 8", new List<Display>()));
+//        var displays = new List<Display>();
+//        displays.Add(new Display(
+//            "https://www.biography.com/.image/t_share/MTE4MDAzNDEwNzg5ODI4MTEw/barack-obama-12782369-1-402.jpg",
+//            "Obama",
+//            "He's a cool fella"
+//        ));
+//        displays.Add(new Display(
+//            "https://smhttp-ssl-42830.nexcesscdn.net/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/d/g/dg65639_3.jpg",
+//            "Minecraft Steve",
+//            "He do be chillin doe"
+//        ));
+//        exhibits.Add(new Exhibit("Text Exhibit 1", displays));
         
-        return exhibits;
+        callback(exhibits);
     }
 }

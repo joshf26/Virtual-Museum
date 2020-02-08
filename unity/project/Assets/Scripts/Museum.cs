@@ -21,6 +21,12 @@ public struct Exhibit {
 }
 
 public struct Display {
+    public Display(string imageUrl, string imageCaption, string text) {
+        this.imageUrl = imageUrl;
+        this.imageCaption = imageCaption;
+        this.text = text;
+    }
+    
     public string imageUrl;
     public string imageCaption;
     public string text;
