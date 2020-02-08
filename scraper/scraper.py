@@ -40,18 +40,12 @@ class Scraper:
             if topic['href'] == '/': imageURL =
             if topic['href'] == '/': imageURL =
             if topic['href'] == '/': imageURL =
+
             self.topics.update({topic['href'] : imageURL})
-            print (topic['href'])
-            print (self.topics[topic['href']])
+            # print (topic['href'])
+            # print (self.topics[topic['href']])
         #print (self.topics)
         return self.topics
-    
-    def get_images_captions(self):
-        #return a dictionary of image url : caption 
-        #isolate each "gallery-box" then get image and "gallery-text"
-        
-        return self.images
-    
 
     def get_exhibit_name(self, topic):
         for name in self.request(topic).find_all('span', class_='mw-headline'):
@@ -63,6 +57,12 @@ class Scraper:
             #     print(child)
         # exhibit_name = self.request(topic).find_all('span', class_='mw-headline').get_text()
         print(*self.exhibit_name)
+    
+    def get_images_captions(self):
+        #return a dictionary of image url : caption 
+        #isolate each "gallery-box" then get image and "gallery-text"
+        
+        return self.images
 
     def get_text(self):
         pass
