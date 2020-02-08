@@ -63,7 +63,7 @@ class Scraper:
             elif topic['href'] == '/Religion': image_url = '/images/thumb/5/50/Brahma_Halebid.jpg/334px-Brahma_Halebid.jpg'
             elif topic['href'] == '/Family': image_url = '/images/thumb/e/e5/Paus_family_portrait_NFB-18645.jpg/300px-Paus_family_portrait_NFB-18645.jpg'
             elif topic['href'] == '/Society': image_url = '/images/thumb/f/f8/Detail_of_Les_tres_riches_heures_-_March.jpg/699px-Detail_of_Les_tres_riches_heures_-_March.jpg'
-            elif topic['href'] == '/Language': image_url = '/images/thumb/f/f8/Detail_of_Les_tres_riches_heures_-_March.jpg/699px-Detail_of_Les_tres_riches_heures_-_March.jpg'
+            elif topic['href'] == '/Language': image_url = '/images/thumb/5/53/Novi_Sad_mayor_office.jpg/300px-Novi_Sad_mayor_office.jpg'
 
             self.topics.update({topic['href'][1:] : 'https://kids.kiddle.co' + image_url})
         
