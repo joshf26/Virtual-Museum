@@ -10,12 +10,20 @@ public class Controller : MonoBehaviour {
 
     public GameObject menu;
     public GameObject player;
+    public GameObject fillerObject;
     public GameObject exhibitObject;
     public GameObject topicObject;
     public Transform topicsList;
     
     List<Topic> _topics;
     Network _network;
+    
+    Vector3[] _offsets = new Vector3[4] {
+        Vector3.forward * 30,
+        Vector3.right * 30,
+        Vector3.back * 30,
+        Vector3.left * 30
+    }; 
     
     void Awake() {
         _network = new Network(address);
@@ -69,8 +77,6 @@ public class Controller : MonoBehaviour {
     }
 
     void MakeExhibit(Vector3 position, Exhibit exhibit) {
-        Debug.Log($"Making exhibit at ${position}.");
-
         Instantiate(exhibitObject, position, Quaternion.identity);
     }
 
@@ -86,24 +92,37 @@ public class Controller : MonoBehaviour {
                 position = exhibitPositions.ElementAt(Random.Range(0, exhibitPositions.Count - 1));
                 
                 var random = Random.Range(0, 3);
-                switch (random) {
-                    case 0:
-                        position += Vector3.forward * 30;
-                        break;
-                    case 1:
-                        position += Vector3.right * 30;
-                        break;
-                    case 2:
-                        position += Vector3.back * 30;
-                        break;
-                    default:
-                        position += Vector3.left * 30;
-                        break;
-                }
+                position += _offsets[random];
             }
 
             exhibitPositions.Add(position);
             MakeExhibit(position, exhibit);
+        }
+
+        // Close all the gaps.
+        foreach (var exhibitPosition in exhibitPositions) {
+            foreach (var offset in _offsets) {
+                var gapPosition = exhibitPosition + offset;
+                if (!exhibitPositions.Contains(gapPosition)) {
+                    var fillerPosition = (exhibitPosition + gapPosition) / 2;
+                    Debug.Log(fillerPosition);
+
+                    Vector3 rotation;
+                    var heading = fillerPosition - exhibitPosition;
+                    if (heading.x < 0) {
+                        rotation = new Vector3(0, 0, -90);
+                    } else if (heading.x > 0) {
+                        rotation = new Vector3(0, 0, 90);
+                    } else if (heading.z < 0) {
+                        rotation = new Vector3(0, 90, 90);
+                    } else {
+                        rotation = new Vector3(0, 90, -90);
+                    }
+
+                    fillerPosition.y = 3;
+                    Instantiate(fillerObject, fillerPosition, Quaternion.Euler(rotation));
+                }
+            }
         }
     }
 }

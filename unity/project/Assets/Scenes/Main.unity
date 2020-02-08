@@ -926,6 +926,8 @@ MonoBehaviour:
   address: Address goes here.
   menu: {fileID: 982911232}
   player: {fileID: 610777328}
+  fillerObject: {fileID: 8293637348472049633, guid: 964529b341ae0b742bf35b5fd14d397f,
+    type: 3}
   exhibitObject: {fileID: 8499243370591667250, guid: a21e73506f7093644b64627e864cfef0,
     type: 3}
   topicObject: {fileID: 2407436333223790223, guid: 34b6006d84c06484c8d8edda8a4c672c,
