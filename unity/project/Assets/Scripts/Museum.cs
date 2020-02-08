@@ -11,6 +11,11 @@ public struct Topic {
 }
 
 public struct Exhibit {
+    public Exhibit(string name, List<Display> displays) {
+        this.name = name;
+        this.displays = displays;
+    }
+    
     public string name;
     public List<Display> displays;
 }

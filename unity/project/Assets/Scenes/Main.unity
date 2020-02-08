@@ -531,6 +531,12 @@ Transform:
   m_Father: {fileID: 795583905}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &610777328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1438018701}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &621131865 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 832404686854119476, guid: 921f5e94d1ab04d9f932c8805b0be729,
@@ -1307,7 +1313,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_Name
-      value: FPSController
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_IsActive
@@ -1319,7 +1325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1646,7 +1652,7 @@ GameObject:
   - component: {fileID: 1853656493}
   m_Layer: 0
   m_Name: Controller
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1663,7 +1669,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa38bd0313967943a282863c3b017aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  address: bruh
+  address: Address goes here.
+  menu: {fileID: 982911232}
+  player: {fileID: 610777328}
   topicObject: {fileID: 2407436333223790223, guid: 34b6006d84c06484c8d8edda8a4c672c,
     type: 3}
   topicsList: {fileID: 1949334356}

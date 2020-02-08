@@ -22,6 +22,8 @@ public class Network {
         var exhibits = new List<Exhibit>();
         
         // TODO: Perform network request and format results.
+        exhibits.Add(new Exhibit("Text Exhibit 1", new List<Display>()));
+        exhibits.Add(new Exhibit("Text Exhibit 2", new List<Display>()));
         
         return exhibits;
     }

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class Controller : MonoBehaviour {
     public string address;
 
+    public GameObject menu;
+    public GameObject player;
     public GameObject topicObject;
     public Transform topicsList;
     
@@ -23,13 +25,22 @@ public class Controller : MonoBehaviour {
             StartCoroutine(GetTexture(topic.imageUrl, image));
         }
     }
+
+    public void ChooseTopic(string topic) {
+        Debug.Log($"Choosing topic {topic}.");
+
+        GenerateMuseum(topic);
+        
+        menu.SetActive(false);
+        player.SetActive(true);
+    }
     
     IEnumerator GetTexture(string url, Image image) {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
 
         yield return www.SendWebRequest();
 
-        if(www.isNetworkError) {
+        if (www.isNetworkError) {
             Debug.Log(www.error);
         } else {
             Texture2D webTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
@@ -45,16 +56,40 @@ public class Controller : MonoBehaviour {
     Image MakeTopic(string topicName) {
         var newTopic = Instantiate(topicObject, topicsList);
         newTopic.GetComponentInChildren<Text>().text = topicName;
+        newTopic.GetComponent<Button>().onClick.AddListener(delegate {
+            ChooseTopic(topicName);
+        });
         return newTopic.GetComponentInChildren<Image>();
+    }
+
+    void MakeDisplay(Vector3 position, Display display) {
+        
+    }
+
+    void MakeExhibit(Vector3 position, Exhibit exhibit) {
+        Debug.Log($"Making exhibit at ${position}.");
     }
 
     public void GenerateMuseum(string topic) {
         List<Exhibit> museum = _network.get_museum(topic);
 
+        Vector3 position = Vector3.zero;
         foreach (var exhibit in museum) {
-//            MakeTopic(exhibit.name, exhibit);
+            MakeExhibit(position, exhibit);
+
+            var random = Random.Range(0, 4);
+            if (random < 1) {
+                position += Vector3.forward * 15;
+            }
+            else if (random < 2) {
+                position += Vector3.right * 15;
+            }
+            else if (random < 3) {
+                position += Vector3.right * 15;
+            }
+            else {
+                position += Vector3.left * 15;
+            }
         }
-        
-        // TODO: Generate museum from exhibit list.
     }
 }
