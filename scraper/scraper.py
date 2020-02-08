@@ -64,12 +64,12 @@ class Scraper:
             elif topic['href'] == 'Family': image_url = '/images/thumb/e/e5/Paus_family_portrait_NFB-18645.jpg/300px-Paus_family_portrait_NFB-18645.jpg'
             elif topic['href'] == 'Society': image_url = '/images/thumb/f/f8/Detail_of_Les_tres_riches_heures_-_March.jpg/699px-Detail_of_Les_tres_riches_heures_-_March.jpg'
             elif topic['href'] == 'Language': image_url = '/images/thumb/f/f8/Detail_of_Les_tres_riches_heures_-_March.jpg/699px-Detail_of_Les_tres_riches_heures_-_March.jpg'
-
+            image_url = 'https://kids.kiddle.co' + image_url
             self.topics.update({topic['href'] : image_url})
             # print (topic['href'])
             # print (self.topics[topic['href']])
         # print (self.topics)
-        image_url = 'https://kids.kiddle.co' + image_url
+        
         return self.topics
 
     def get_exhibit(self, topic):
