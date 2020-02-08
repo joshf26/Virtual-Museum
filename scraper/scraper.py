@@ -78,7 +78,6 @@ class Scraper:
         cpt_list = []
         text_list = []
         image = ''
-        imgcpt_indx = 0
         # tags for images and headlines
         for html in self.request(topic).select_one('#mw-content-text').find_all(['div','h2','h3']):
             # if there's a headline, will always find the first headline as true
@@ -88,12 +87,16 @@ class Scraper:
                     prev_exhibit = html.find(class_ = 'mw-headline').text
                     body = html.find(class_ = 'mw-headline').parent.find_next_sibling('p')
                     if body is not None:
-                        print(html.find(class_ = 'mw-headline').parent.find_next_sibling('p').text)
-
+                        body = html.find(class_ = 'mw-headline').parent.find_next_sibling('p').text.strip()
+                    else:
+                        body = ''
+                    if body not in text_list:
+                        text_list.append(body)
                 else:
                     exhibit_dict["exhibit_name"] = prev_exhibit
                     exhibit_dict["imageUrl"] = img_list
                     exhibit_dict["caption"] = cpt_list
+                    exhibit_dict["text"] = text_list[0]
                     self.exhibit.append(exhibit_dict)
 
                     exhibit_dict = {}
@@ -116,7 +119,7 @@ class Scraper:
                         if caption is not None:
                             cpt_list.append(caption.find('p').text.strip())
                         else:
-                            cpt_list.append("")
+                            cpt_list.append('')
                     
                     # Not in the `Images for kids` exhibit
                     else:
@@ -124,7 +127,7 @@ class Scraper:
                         if caption is not None:
                             cpt_list.append(caption.text.strip())
                         else:
-                            cpt_list.append("")
+                            cpt_list.append('')
 
 
         if len(img_list) > 0:
@@ -132,6 +135,7 @@ class Scraper:
             exhibit_dict["exhibit_name"] = prev_exhibit
             exhibit_dict["imageUrl"] = img_list
             exhibit_dict["caption"] = cpt_list
+            exhibit_dict["text"] = text_list[0]
             self.exhibit.append(exhibit_dict)
             exhibit_dict = {}
 
@@ -139,15 +143,6 @@ class Scraper:
         #     for key in i:
         #         print(key, ' : \n',i[key], '\n')
         return self.exhibit
-    
-    def get_images_captions(self):
-        #return a dictionary of image url : caption 
-        #isolate each "gallery-box" then get image and "gallery-text"
-        
-        return self.images
-
-    def get_text(self):
-        pass
 
     def get_museum(self, topic):
         self.get_exhibit(topic)
