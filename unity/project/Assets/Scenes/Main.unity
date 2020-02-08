@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa38bd0313967943a282863c3b017aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  address: Address goes here.
+  address: http://10.201.67.122:8080
   menu: {fileID: 982911232}
   player: {fileID: 610777328}
   fillerObject: {fileID: 8293637348472049633, guid: 964529b341ae0b742bf35b5fd14d397f,

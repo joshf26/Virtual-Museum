@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using UnityEngine;
 using UnityEngine.Networking;
 
 public class Network {
@@ -7,16 +11,30 @@ public class Network {
     public Network(string address) {
         _address = address;
     }
-    
-    public List<Topic> get_topics() {
+
+    public IEnumerator GetTopics(Action<List<Topic>> callback) {
+        Debug.Log($"Making request to {_address}/topics");
+        UnityWebRequest www = UnityWebRequest.Get($"{_address}/topics");
+
+        yield return www.SendWebRequest();
+
+        var topicsDict = new Dictionary<string, string>();
+        if (www.isNetworkError) {
+            Debug.Log($"Error: {www.error}");
+        } else {
+            topicsDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(www.downloadHandler.text);
+        }
+
         var topics = new List<Topic>();
+
+        int i = 0;
+        foreach (var topic in topicsDict) {
+            topics.Add(new Topic(topic.Key, topic.Value));
+            if (i++ == 30) break;
+        }
         
-        // TODO: Perform network request and format results.
-        topics.Add(new Topic("Test Topic 1", "https://knowpathology.com.au/app/uploads/2018/07/Happy-Test-Screen-01-825x510.png"));
-        topics.Add(new Topic("Test Topic 2", "https://iscnow.us/wp-content/uploads/2018/03/Test.png"));
-        
-        return topics;
-    } 
+        callback(topics);
+    }
     
     public List<Exhibit> get_museum(string topic) {
         var exhibits = new List<Exhibit>();

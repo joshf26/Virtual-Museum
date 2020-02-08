@@ -15,9 +15,9 @@ public class Controller : MonoBehaviour {
     public GameObject topicObject;
     public Transform topicsList;
     
-    List<Topic> _topics;
     Network _network;
-    
+//    private Dictionary<string, Sprite> _imageCache;
+
     Vector3[] _offsets = new Vector3[4] {
         Vector3.forward * 30,
         Vector3.right * 30,
@@ -28,14 +28,16 @@ public class Controller : MonoBehaviour {
     void Awake() {
         _network = new Network(address);
 
-        _topics = _network.get_topics();
+        StartCoroutine(_network.GetTopics(TopicsReady));
+    }
 
-        foreach (var topic in _topics) {
+    public void TopicsReady(List<Topic> topics) {
+        foreach (var topic in topics) {
             Image image = MakeTopic(topic.name);
             StartCoroutine(GetTexture(topic.imageUrl, image));
         }
     }
-
+    
     public void ChooseTopic(string topic) {
         Debug.Log($"Choosing topic {topic}.");
 
@@ -60,6 +62,7 @@ public class Controller : MonoBehaviour {
                 new Vector2(0.5f, 0.5f),
                 100.0f
             );
+            
         }
     }
 
@@ -105,20 +108,18 @@ public class Controller : MonoBehaviour {
                 var gapPosition = exhibitPosition + offset;
                 if (!exhibitPositions.Contains(gapPosition)) {
                     var fillerPosition = (exhibitPosition + gapPosition) / 2;
-                    Debug.Log(fillerPosition);
 
                     Vector3 rotation;
                     var heading = fillerPosition - exhibitPosition;
-                    if (heading.x < 0) {
+                    if (heading.x < 0)
                         rotation = new Vector3(0, 0, -90);
-                    } else if (heading.x > 0) {
+                    else if (heading.x > 0)
                         rotation = new Vector3(0, 0, 90);
-                    } else if (heading.z < 0) {
+                    else if (heading.z < 0)
                         rotation = new Vector3(0, 90, 90);
-                    } else {
+                    else
                         rotation = new Vector3(0, 90, -90);
-                    }
-
+                    
                     fillerPosition.y = 3;
                     Instantiate(fillerObject, fillerPosition, Quaternion.Euler(rotation));
                 }
