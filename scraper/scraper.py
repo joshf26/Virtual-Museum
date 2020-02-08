@@ -92,7 +92,7 @@ class Scraper:
             # might be the only exhibit with multiple pics anyway
             self.exhibit[prevExhibit] = imgList
 
-        for key in self.exhibit: print (key, ": \n", self.exhibit[key])
+        for key in self.exhibit: print (key, ': \n', self.exhibit[key])
         return self.exhibit
     
     def get_images_captions(self):
