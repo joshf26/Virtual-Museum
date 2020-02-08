@@ -17,6 +17,32 @@ class Scraper:
         return BeautifulSoup(requests.get('https://kids.kiddle.co/{}'.format(path)).text, 'html.parser')
     #elizabeth
     def get_topics(self):
+        # topics format    topic url : image url
+        names = self.request('').select_one('#mw-content-text').select('ol a')
+        # science to astronomy
+        imageURL = '/images/thumb/3/3c/Size_planets_comparison.jpg/380px-Size_planets_comparison.jpg'
+        for topic in names:
+            if topic['href'] == '/Biology': imageURL = '/images/thumb/3/32/EscherichiaColi_NIAID.jpg/535px-EscherichiaColi_NIAID.jpg'
+            if topic['href'] == '/Organism': imageURL = '/images/thumb/1/14/Animal_diversity.png/300px-Animal_diversity.png'
+            if topic['href'] == '/Anatomy': imageURL = '/images/thumb/d/d5/Lateral_head_anatomy_detail.jpg/300px-Lateral_head_anatomy_detail.jpg'
+            if topic['href'] == '/Medicine': imageURL = '/images/thumb/0/08/Surgeons_at_Work.jpg/300px-Surgeons_at_Work.jpg'
+            if topic['href'] == '/Chemistry': imageURL = '/images/thumb/d/d8/Atom_diagram.png/300px-Atom_diagram.png'
+            if topic['href'] == '/Avalanche': imageURL = 'images/thumb/7/7e/Fourpeaked-fumaroles-cyrus-read1.JPG/300px-Fourpeaked-fumaroles-cyrus-read1.JPG'
+            if topic['href'] == '/Physics': imageURL = '/images/thumb/9/9a/CollageFisica.jpg/300px-CollageFisica.jpg'
+            if topic['href'] == '/Measurement': imageURL = '/images/thumb/8/82/Measuring_Tape_Inch%2BCM.jpg/300px-Measuring_Tape_Inch%2BCM.jpg'
+            if topic['href'] == '/Calendar': imageURL = '/images/thumb/7/7b/Petaluma_and_Santa_Rosa_Railroad_Co._Calendar.jpg/321px-Petaluma_and_Santa_Rosa_Railroad_Co._Calendar.jpg'
+            if topic['href'] == '/Food': imageURL = '/images/thumb/c/c5/Foods.jpg/200px-Foods.jpg'
+            if topic['href'] == '/Beer': imageURL = '/images/thumb/d/d7/Lager_beer_in_glass.jpg/300px-Lager_beer_in_glass.jpg'
+            if topic['href'] == '/Mathematics': imageURL = '/images/thumb/2/21/Euclid.jpg/300px-Euclid.jpg'
+            if topic['href'] == '/Technology': imageURL = '/images/thumb/4/45/Leonardo-Robot3.jpg/300px-Leonardo-Robot3.jpg'
+            if topic['href'] == '/': imageURL =
+            if topic['href'] == '/': imageURL =
+            if topic['href'] == '/': imageURL =
+            if topic['href'] == '/': imageURL =
+            self.topics.update({topic['href'] : imageURL})
+            print (topic['href'])
+            print (self.topics[topic['href']])
+        #print (self.topics)
         return self.topics
     
     #tiffany
@@ -26,9 +52,9 @@ class Scraper:
         return self.images
     
     def get_exhibit_name(self):
-    
+        pass
     def get_text(self):
-    
+        pass
 
     def get_museum(self, topic):
         #fill images
