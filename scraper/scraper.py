@@ -16,7 +16,7 @@ class Scraper:
         """ Returns a BeautifulSoup of the specified path. """
 
         return BeautifulSoup(requests.get('https://kids.kiddle.co/{}'.format(path)).text, 'html.parser')
-    #elizabeth
+
     def get_topics(self):
         # topics format    topic url : image url
         names = self.request('').select_one('#mw-content-text').select('ol a')
@@ -36,7 +36,7 @@ class Scraper:
             if topic['href'] == '/Beer': imageURL = '/images/thumb/d/d7/Lager_beer_in_glass.jpg/300px-Lager_beer_in_glass.jpg'
             if topic['href'] == '/Mathematics': imageURL = '/images/thumb/2/21/Euclid.jpg/300px-Euclid.jpg'
             if topic['href'] == '/Technology': imageURL = '/images/thumb/4/45/Leonardo-Robot3.jpg/300px-Leonardo-Robot3.jpg'
-            if topic['href'] == '/': imageURL =
+            if topic['href'] == '/Communication': imageURL = '/images/b/b1/Rudy_Giuliani_speaking.jpg'
             if topic['href'] == '/': imageURL =
             if topic['href'] == '/': imageURL =
             if topic['href'] == '/': imageURL =
