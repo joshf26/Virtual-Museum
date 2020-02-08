@@ -92,10 +92,10 @@ class Scraper:
                     if body not in text_list:
                         text_list.append(body)
                 else:
-                    exhibit_dict["exhibit_name"] = prev_exhibit
-                    exhibit_dict["imageUrl"] = img_list
-                    exhibit_dict["caption"] = cpt_list
-                    exhibit_dict["text"] = text_list[0]
+                    exhibit_dict['exhibit_name'] = prev_exhibit
+                    exhibit_dict['imageUrl'] = img_list
+                    exhibit_dict['caption'] = cpt_list
+                    exhibit_dict['text'] = text_list[0]
                     self.exhibit.append(exhibit_dict)
 
                     exhibit_dict = {}
@@ -138,10 +138,10 @@ class Scraper:
 
         if len(img_list) > 0:
             # add the last exhibit if there are images....this also includes Images for Kids
-            exhibit_dict["exhibit_name"] = prev_exhibit
-            exhibit_dict["imageUrl"] = img_list
-            exhibit_dict["caption"] = cpt_list
-            exhibit_dict["text"] = text_list[0]
+            exhibit_dict['exhibit_name'] = prev_exhibit
+            exhibit_dict['imageUrl'] = img_list
+            exhibit_dict['caption'] = cpt_list
+            exhibit_dict['text'] = text_list[0]
             self.exhibit.append(exhibit_dict)
             exhibit_dict = {}
 
