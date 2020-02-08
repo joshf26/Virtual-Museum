@@ -76,6 +76,7 @@ class Scraper:
         prev_exhibit = ''
         img_list = []
         cpt_list = []
+        text_list = []
         image = ''
         # tags for images and headlines
         for html in self.request(topic).select_one('#mw-content-text').find_all(['div','h2','h3']):
@@ -84,6 +85,7 @@ class Scraper:
                 # store exhibit if first exhibit or prior exhibit had no images
                 if len(img_list) == 0:
                     prev_exhibit = html.find(class_ = 'mw-headline').text
+                    print(prev_exhibit.parent.find_next_sibling('p').text)
                 else:
                     exhibit_dict["exhibit_name"] = prev_exhibit
                     exhibit_dict["imageUrl"] = img_list
@@ -92,6 +94,7 @@ class Scraper:
                     exhibit_dict = {}
                     img_list = []
                     cpt_list = []
+                    text_list = []
                     #  store exhibit after adding previous
                     prev_exhibit = html.find(class_ = 'mw-headline').text
             # check if there's a heading to be stored, therefore images at the intro are not added
@@ -138,5 +141,4 @@ class Scraper:
         pass
 
     def get_museum(self, topic):
-        #fill images
         self.get_exhibit(topic)
