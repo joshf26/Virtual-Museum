@@ -42,12 +42,12 @@ class Scraper:
             if topic['href'] == '/Glass': imageURL = '/images/thumb/a/a4/Glass-Ball.jpg/300px-Glass-Ball.jpg'
             if topic['href'] == '/Transport': imageURL = '/images/thumb/7/76/Incheon_International_Airport.jpg/600px-Incheon_International_Airport.jpg'
             if topic['href'] == '/Art': imageURL = '/images/thumb/a/ab/Chemin_montant_dans_les_hautes_herbes_-_Pierre_Auguste_Renoir.jpg/300px-Chemin_montant_dans_les_hautes_herbes_-_Pierre_Auguste_Renoir.jpg'
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
-            if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
+            # if topic['href'] == '/': imageURL =
 
             self.topics.update({topic['href'] : imageURL})
             # print (topic['href'])
@@ -56,8 +56,9 @@ class Scraper:
         return self.topics
 
     def get_exhibit_name(self, topic):
-        for name in self.request(topic).find_all('span', class_='mw-headline'):
+        for name in self.request(topic).select('h2 mw-headline'):#self.request(topic).find_all('span', class_='mw-headline', tag = 'h2'):
             if name.get_text() != 'Images for kids' and name.get_text() != "Related pages":
+                #if name.find("img") == None:
                 self.exhibit_name.append(name.get_text())
             # if name.has_attr('img'):
             # children = name.findChildren('img', recursive=True)
@@ -78,6 +79,7 @@ class Scraper:
     def get_museum(self, topic):
         #fill images
         self.get_images_captions()
+        self.get_exhibit_name(topic)
         #loop through self.images, divide by 4 for now -> 0-3 images as base cases
         #if 0-1 images -> 1 exhibit
         return {
