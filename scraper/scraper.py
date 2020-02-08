@@ -86,12 +86,16 @@ class Scraper:
                 # store exhibit if first exhibit or prior exhibit had no images
                 if len(img_list) == 0:
                     prev_exhibit = html.find(class_ = 'mw-headline').text
-                    print(prev_exhibit.parent.find_next_sibling('p').text)
+                    body = html.find(class_ = 'mw-headline').parent.find_next_sibling('p')
+                    if body is not None:
+                        print(html.find(class_ = 'mw-headline').parent.find_next_sibling('p').text)
+
                 else:
                     exhibit_dict["exhibit_name"] = prev_exhibit
                     exhibit_dict["imageUrl"] = img_list
                     exhibit_dict["caption"] = cpt_list
                     self.exhibit.append(exhibit_dict)
+
                     exhibit_dict = {}
                     img_list = []
                     cpt_list = []
@@ -131,9 +135,9 @@ class Scraper:
             self.exhibit.append(exhibit_dict)
             exhibit_dict = {}
 
-        for i in self.exhibit:
-            for key in i:
-                print(key, ' : \n',i[key], '\n')
+        # for i in self.exhibit:
+        #     for key in i:
+        #         print(key, ' : \n',i[key], '\n')
         return self.exhibit
     
     def get_images_captions(self):
