@@ -37,6 +37,14 @@ class Scraper:
             if topic['href'] == '/Mathematics': imageURL = '/images/thumb/2/21/Euclid.jpg/300px-Euclid.jpg'
             if topic['href'] == '/Technology': imageURL = '/images/thumb/4/45/Leonardo-Robot3.jpg/300px-Leonardo-Robot3.jpg'
             if topic['href'] == '/Communication': imageURL = '/images/b/b1/Rudy_Giuliani_speaking.jpg'
+            if topic['href'] == '/Electronics': imageURL = '/images/thumb/d/d7/Desktop_computer_clipart_-_Yellow_theme.svg/300px-Desktop_computer_clipart_-_Yellow_theme.svg.png'
+            if topic['href'] == '/Renewable_energy': imageURL = '/images/thumb/b/bb/Alternative_Energies.jpg/250px-Alternative_Energies.jpg'
+            if topic['href'] == '/Glass': imageURL = '/images/thumb/a/a4/Glass-Ball.jpg/300px-Glass-Ball.jpg'
+            if topic['href'] == '/Transport': imageURL = '/images/thumb/7/76/Incheon_International_Airport.jpg/600px-Incheon_International_Airport.jpg'
+            if topic['href'] == '/Art': imageURL = '/images/thumb/a/ab/Chemin_montant_dans_les_hautes_herbes_-_Pierre_Auguste_Renoir.jpg/300px-Chemin_montant_dans_les_hautes_herbes_-_Pierre_Auguste_Renoir.jpg'
+            if topic['href'] == '/': imageURL =
+            if topic['href'] == '/': imageURL =
+            if topic['href'] == '/': imageURL =
             if topic['href'] == '/': imageURL =
             if topic['href'] == '/': imageURL =
             if topic['href'] == '/': imageURL =
