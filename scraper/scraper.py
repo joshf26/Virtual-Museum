@@ -65,10 +65,12 @@ class Scraper:
             elif topic['href'] == 'Society': imageURL = '/images/thumb/f/f8/Detail_of_Les_tres_riches_heures_-_March.jpg/699px-Detail_of_Les_tres_riches_heures_-_March.jpg'
             elif topic['href'] == 'Language': imageURL = '/images/thumb/f/f8/Detail_of_Les_tres_riches_heures_-_March.jpg/699px-Detail_of_Les_tres_riches_heures_-_March.jpg'
 
+            # print(imageURL)
             self.topics.update({topic['href'] : imageURL})
             # print (topic['href'])
             # print (self.topics[topic['href']])
-        #print (self.topics)
+        # print (self.topics)
+        imageURL = 'https://kids.kiddle.co' + imageURL
         return self.topics
 
     def get_exhibit(self, topic):
@@ -89,11 +91,12 @@ class Scraper:
                     prev_exhibit = html.find(class_ = 'mw-headline').text
             # check if there's a heading to be stored, therefore images at the intro are not added
             # can be changed later, maybe the exhibit name can be the article title or smthng
-            if html.find('img') and prev_exhibit!='': 
+            if html.find('img') and prev_exhibit != '': 
                 image = html.find('img')['src']
                 # idk images are repeated, didn't figure out why
                 if image not in img_list:
                     # this should also account for multiple images btwn headlines
+                    image = 'https://kids.kiddle.co' + image
                     img_list.append(image)
         if len(img_list) > 0:
             # add the last exhibit if there are images....this also includes Images for Kids
