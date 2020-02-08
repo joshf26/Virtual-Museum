@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class Controller : MonoBehaviour {
 
     public GameObject menu;
     public GameObject player;
+    public GameObject exhibitObject;
     public GameObject topicObject;
     public Transform topicsList;
     
@@ -68,28 +70,40 @@ public class Controller : MonoBehaviour {
 
     void MakeExhibit(Vector3 position, Exhibit exhibit) {
         Debug.Log($"Making exhibit at ${position}.");
+
+        Instantiate(exhibitObject, position, Quaternion.identity);
     }
 
     public void GenerateMuseum(string topic) {
         List<Exhibit> museum = _network.get_museum(topic);
 
-        Vector3 position = Vector3.zero;
-        foreach (var exhibit in museum) {
-            MakeExhibit(position, exhibit);
+        var exhibitPositions = new HashSet<Vector3>();
 
-            var random = Random.Range(0, 4);
-            if (random < 1) {
-                position += Vector3.forward * 15;
+        foreach (var exhibit in museum) {
+            Vector3 position = Vector3.zero;
+
+            while (exhibitPositions.Contains(position)) {
+                position = exhibitPositions.ElementAt(Random.Range(0, exhibitPositions.Count - 1));
+                
+                var random = Random.Range(0, 3);
+                switch (random) {
+                    case 0:
+                        position += Vector3.forward * 30;
+                        break;
+                    case 1:
+                        position += Vector3.right * 30;
+                        break;
+                    case 2:
+                        position += Vector3.back * 30;
+                        break;
+                    default:
+                        position += Vector3.left * 30;
+                        break;
+                }
             }
-            else if (random < 2) {
-                position += Vector3.right * 15;
-            }
-            else if (random < 3) {
-                position += Vector3.right * 15;
-            }
-            else {
-                position += Vector3.left * 15;
-            }
+
+            exhibitPositions.Add(position);
+            MakeExhibit(position, exhibit);
         }
     }
 }

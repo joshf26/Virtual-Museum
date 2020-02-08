@@ -24,6 +24,12 @@ public class Network {
         // TODO: Perform network request and format results.
         exhibits.Add(new Exhibit("Text Exhibit 1", new List<Display>()));
         exhibits.Add(new Exhibit("Text Exhibit 2", new List<Display>()));
+        exhibits.Add(new Exhibit("Text Exhibit 3", new List<Display>()));
+        exhibits.Add(new Exhibit("Text Exhibit 4", new List<Display>()));
+        exhibits.Add(new Exhibit("Text Exhibit 5", new List<Display>()));
+        exhibits.Add(new Exhibit("Text Exhibit 6", new List<Display>()));
+        exhibits.Add(new Exhibit("Text Exhibit 7", new List<Display>()));
+        exhibits.Add(new Exhibit("Text Exhibit 8", new List<Display>()));
         
         return exhibits;
     }
