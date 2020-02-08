@@ -16,11 +16,11 @@ def museum(topic):
 
 if __name__ == '__main__':
     scraper = Scraper()
-    topics()
+    #topics()
     # museum("test")
     
-    scraper.get_exhibit('Dinosaur')
+    #scraper.get_exhibit('Dinosaur')
     #x = scraper.request('').select_one('#mw-content-text').select('a')
     #print(*[y.text for y in x])``
 
-    # run(host='localhost', port=8080)
+    run(host='localhost', port=8080)
