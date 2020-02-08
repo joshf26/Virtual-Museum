@@ -10,7 +10,7 @@ class Scraper:
         # TODO: Get topics and cache
         self.topics = {}
         self.images = {}
-        self.exhibit_name = []
+        self.exhibit = {}
 
     def request(self, path):
         """ Returns a BeautifulSoup of the specified path. """
@@ -48,13 +48,13 @@ class Scraper:
             elif topic['href'] == '/Game': imageURL = '/images/thumb/2/2a/UEFA-Women%27s_Cup_Final_2005_at_Potsdam_1.jpg/300px-UEFA-Women%27s_Cup_Final_2005_at_Potsdam_1.jpg'
             elif topic['href'] == '/History': imageURL = '/images/thumb/4/4e/History-Dielman-Highsmith.jpeg/971px-History-Dielman-Highsmith.jpeg'
             elif topic['href'] == '/Prehistory': imageURL = 'https://kids.kiddle.co/images/9/99/Great_Sphinx_of_Giza_2.jpg'
-            elif topic['href'] == '/': imageURL =
-            elif topic['href'] == '/': imageURL =
-            elif topic['href'] == '/': imageURL =
-            elif topic['href'] == '/': imageURL =
-            elif topic['href'] == '/': imageURL =
-            elif topic['href'] == '/': imageURL =
-            elif topic['href'] == '/': imageURL =
+            # elif topic['href'] == '/': imageURL =
+            # elif topic['href'] == '/': imageURL =
+            # elif topic['href'] == '/': imageURL =
+            # elif topic['href'] == '/': imageURL =
+            # elif topic['href'] == '/': imageURL =
+            # elif topic['href'] == '/': imageURL =
+            # elif topic['href'] == '/': imageURL =
 
             self.topics.update({topic['href'] : imageURL})
             # print (topic['href'])
@@ -62,18 +62,38 @@ class Scraper:
         #print (self.topics)
         return self.topics
 
-    def get_exhibit_name(self, topic):
-        for name in self.request(topic).select('h2 mw-headline'):#self.request(topic).find_all('span', class_='mw-headline', tag = 'h2'):
-            if name.get_text() != 'Images for kids' and name.get_text() != "Related pages":
-                #if name.find("img") == None:
-                self.exhibit_name.append(name.get_text())
+    def get_exhibit(self, topic):
+        prevExhibit = ''
+        imgList = []
+        image = ''
+        # tags for images and headlines
+        for html in self.request(topic).select_one('#mw-content-text').find_all(['div','h2','h3']):
+            # if there's a headline, will always find the first headline as true
+            if html.find(class_ = 'mw-headline'):
+                # store exhibit if first exhibit or prior exhibit had no images
+                if len(imgList) == 0:
+                    prevExhibit = html.find(class_ = 'mw-headline').text
+                else:
+                    self.exhibit[prevExhibit] = imgList
+                    imgList = []
+                    #  store exhibit after adding previous
+                    prevExhibit = html.find(class_ = 'mw-headline').text
+            # check if there's a heading to be stored, therefore images at the intro are not added
+            # can be changed later, maybe the exhibit name can be the article title or smthng
+            if html.find('img') and prevExhibit!='': 
+                image = html.find('img')['src']
+                # idk images are repeated, didn't figure out why
+                if image not in imgList:
+                    # this should also account for multiple images btwn headlines
+                    imgList.append(image)
+        if len(imgList) > 0:
+            # add the last exhibit if there are images....this also includes Images for Kids
+            # let's just have Images for Kids as a possible exhibit for now!
+            # might be the only exhibit with multiple pics anyway
+            self.exhibit[prevExhibit] = imgList
 
-            # if name.has_attr('img'):
-            # children = name.findChildren('img', recursive=True)
-            # for child in children:
-            #     print(child)
-        # exhibit_name = self.request(topic).find_all('span', class_='mw-headline').get_text()
-        print(*self.exhibit_name)
+        for key in self.exhibit: print (key, ": \n", self.exhibit[key])
+        return self.exhibit
     
     def get_images_captions(self):
         #return a dictionary of image url : caption 
@@ -86,8 +106,7 @@ class Scraper:
 
     def get_museum(self, topic):
         #fill images
-        self.get_images_captions()
-        self.get_exhibit_name(topic)
+        self.get_exhibit(topic)
         #loop through self.images, divide by 4 for now -> 0-3 images as base cases
         #if 0-1 images -> 1 exhibit
         return {
