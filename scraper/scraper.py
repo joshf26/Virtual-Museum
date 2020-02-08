@@ -10,6 +10,7 @@ class Scraper:
         # TODO: Get topics and cache
         self.topics = {}
         self.images = {}
+        self.exhibit_name = []
 
     def request(self, path):
         """ Returns a BeautifulSoup of the specified path. """
@@ -19,16 +20,25 @@ class Scraper:
     def get_topics(self):
         return self.topics
     
-    #tiffany
     def get_images_captions(self):
         #return a dictionary of image url : caption 
         #isolate each "gallery-box" then get image and "gallery-text"
+        
         return self.images
     
-    def get_exhibit_name(self):
-    
+    def get_exhibit_name(self, topic):
+        for name in self.request(topic).find_all('span', class_='mw-headline'):
+            if name.get_text() != 'Images for kids' and name.get_text() != "Related pages":
+                self.exhibit_name.append(name.get_text())
+            # if name.has_attr('img'):
+            # children = name.findChildren('img', recursive=True)
+            # for child in children:
+            #     print(child)
+        # exhibit_name = self.request(topic).find_all('span', class_='mw-headline').get_text()
+        print(*self.exhibit_name)
+        
     def get_text(self):
-    
+        pass
 
     def get_museum(self, topic):
         #fill images
