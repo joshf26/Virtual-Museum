@@ -63,34 +63,34 @@ class Scraper:
         return self.topics
 
     def get_exhibit(self, topic):
-        prevExhibit = ''
-        imgList = []
+        prev_exhibit = ''
+        img_list = []
         image = ''
         # tags for images and headlines
         for html in self.request(topic).select_one('#mw-content-text').find_all(['div','h2','h3']):
             # if there's a headline, will always find the first headline as true
             if html.find(class_ = 'mw-headline'):
                 # store exhibit if first exhibit or prior exhibit had no images
-                if len(imgList) == 0:
-                    prevExhibit = html.find(class_ = 'mw-headline').text
+                if len(img_list) == 0:
+                    prev_exhibit = html.find(class_ = 'mw-headline').text
                 else:
-                    self.exhibit[prevExhibit] = imgList
-                    imgList = []
+                    self.exhibit[prev_exhibit] = img_list
+                    img_list = []
                     #  store exhibit after adding previous
-                    prevExhibit = html.find(class_ = 'mw-headline').text
+                    prev_exhibit = html.find(class_ = 'mw-headline').text
             # check if there's a heading to be stored, therefore images at the intro are not added
             # can be changed later, maybe the exhibit name can be the article title or smthng
-            if html.find('img') and prevExhibit!='': 
+            if html.find('img') and prev_exhibit!='': 
                 image = html.find('img')['src']
                 # idk images are repeated, didn't figure out why
-                if image not in imgList:
+                if image not in img_list:
                     # this should also account for multiple images btwn headlines
-                    imgList.append(image)
-        if len(imgList) > 0:
+                    img_list.append(image)
+        if len(img_list) > 0:
             # add the last exhibit if there are images....this also includes Images for Kids
             # let's just have Images for Kids as a possible exhibit for now!
             # might be the only exhibit with multiple pics anyway
-            self.exhibit[prevExhibit] = imgList
+            self.exhibit[prev_exhibit] = img_list
 
         for key in self.exhibit: print (key, ': \n', self.exhibit[key])
         return self.exhibit
