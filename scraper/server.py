@@ -16,8 +16,9 @@ def museum(topic):
 
 if __name__ == '__main__':
     scraper = Scraper()
-
-    x = scraper.request('').select_one('#mw-content-text').select('a')
-    print(*[y.text for y in x])
+    topics()
+    museum("test")
+    #x = scraper.request('').select_one('#mw-content-text').select('a')
+    #print(*[y.text for y in x])
 
     # run(host='localhost', port=8080)
