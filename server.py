@@ -1,39 +1,23 @@
 from bottle import route, run
+from bs4 import BeautifulSoup
+
+from scraper import Scraper
 
 
 @route('/topics')
 def topics():
-    return {
-        'topic 1': 'image url for topic 1',
-        'topic 2': 'image url for topic 1',
-        'topic 3': 'image url for topic 1',
-    }
+    return scraper.get_topics()
 
 
 @route('/museum/<topic>')
 def museum(topic):
-    return {
-        'exhibit 1': [
-            {
-                'imageUrl': 'image url for exhibit 1 display 1',
-                'imageCaption': 'image caption for exhibit 1 display 1',
-                'text': 'text for exhibit 1 display 1',
-            },
-            {
-                'imageUrl': 'image url for exhibit 1 display 2',
-                'imageCaption': 'image caption for exhibit 1 display 2',
-                'text': 'text for exhibit 1 display 2',
-            },
-        ],
-        'exhibit 2': [
-            {
-                'imageUrl': 'image url for exhibit 1',
-                'imageCaption': 'image caption for exhibit 1',
-                'text': 'text for exhibit 1',
-            },
-        ],
-    }
+    return scraper.get_museum(topic)
 
 
 if __name__ == '__main__':
-    run(host='localhost', port=8080)
+    scraper = Scraper()
+
+    x = scraper.request('').select_one('#mw-content-text').select('a')
+    print(*[y.text for y in x])
+
+    # run(host='localhost', port=8080)
