@@ -1,5 +1,5 @@
 # Virtual Museum
-Our project for T9 Hacks
+Our project for the T9 Hacks Hackathon 2020. Winner of the "Best Creative Tech" prize. :trophy:
 
 ### Setup
 Run `pip install -r scraper/requirements.txt`.
