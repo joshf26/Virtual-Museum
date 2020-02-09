@@ -27,32 +27,37 @@ public class Controller : MonoBehaviour {
         Vector3.left * 30
     };
 
-    List<Vector3> _displayOffsets = new List<Vector3> {
-        new Vector3(14, 0, 9),
-        new Vector3(14, 0, -9),
-        new Vector3(-14, 0, 9),
-        new Vector3(-14, 0, -9),
-        new Vector3(9, 0, -14),
-        new Vector3(-9, 0, -14),
-        new Vector3(9, 0, 14),
-        new Vector3(-9, 0, 14)
-    };
-    
-    List<Vector3> _displayRotation = new List<Vector3> {
-        new Vector3(0, 0, 0),
-        new Vector3(0, 0, 0),
-        new Vector3(0, 180, 0),
-        new Vector3(0, 180, 0),
-        new Vector3(0, 90, 0),
-        new Vector3(0, 90, 0),
-        new Vector3(0, -90, 0),
-        new Vector3(0, -90, 0)
-    };
+    private List<Vector3> _displayOffsets;
+    private List<Vector3> _displayRotation;
     
     void Awake() {
         _network = new Network(address);
 
         StartCoroutine(_network.GetTopics(TopicsReady));
+    }
+
+    void resetArrays() {
+        _displayOffsets = new List<Vector3> {
+            new Vector3(13.9f, 0, 9),
+            new Vector3(13.9f, 0, -9),
+            new Vector3(-13.9f, 0, 9),
+            new Vector3(-13.9f, 0, -9),
+            new Vector3(9, 0, -13.9f),
+            new Vector3(-9, 0, -13.9f),
+            new Vector3(9, 0, 13.9f),
+            new Vector3(-9, 0, 13.9f)
+        };
+    
+        _displayRotation = new List<Vector3> {
+            new Vector3(0, 0, 0),
+            new Vector3(0, 0, 0),
+            new Vector3(0, 180, 0),
+            new Vector3(0, 180, 0),
+            new Vector3(0, 90, 0),
+            new Vector3(0, 90, 0),
+            new Vector3(0, -90, 0),
+            new Vector3(0, -90, 0)
+        };
     }
 
     public void TopicsReady(List<Topic> topics) {
@@ -102,6 +107,10 @@ public class Controller : MonoBehaviour {
     }
 
     void MakeDisplay(Vector3 position, Display display) {
+        if (_displayOffsets.Count == 0) {
+            return;
+        }
+        
         var randomIndex = Random.Range(0, _displayOffsets.Count);
         var offset = _displayOffsets[randomIndex];
         var rotation = _displayRotation[randomIndex];
@@ -112,8 +121,13 @@ public class Controller : MonoBehaviour {
         var newDisplay = Instantiate(displayObject, position + offset, Quaternion.Euler(rotation));
 
         foreach (var textComponent in newDisplay.GetComponentsInChildren<TextMesh>()) {
-            Debug.Log(textComponent);
             textComponent.text = textComponent.name == "Body Text" ? display.text : display.imageCaption;
+
+            int index = 70;
+            while (index < textComponent.text.Length) {
+                textComponent.text = textComponent.text.Insert(index, "\n");
+                index += 70;
+            }
         }
 
         StartCoroutine(GetTexture(display.imageUrl, sprite => {
@@ -122,6 +136,8 @@ public class Controller : MonoBehaviour {
     }
 
     void MakeExhibit(Vector3 position, Exhibit exhibit) {
+        resetArrays();
+        
         Instantiate(exhibitObject, position, Quaternion.identity);
 
         foreach (var display in exhibit.displays) {

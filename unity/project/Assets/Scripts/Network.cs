@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -36,18 +37,24 @@ public class Network {
         callback(topics);
     }
     
+    private class RawExhibit {
+        public string exhibit_name;
+        public List<string> imageUrl;
+        public List<string> caption;
+        public string text;
+    }
+    
     public IEnumerator GetMuseum(string topic, Action<List<Exhibit>> callback) {
         Debug.Log($"Making request to {_address}/museum/{topic}");
         UnityWebRequest www = UnityWebRequest.Get($"{_address}/museum/{topic}");
 
         yield return www.SendWebRequest();
 
-        var rawExhibits = new List<Dictionary<string, object>>();
+        var rawExhibits = new List<RawExhibit>();
         if (www.isNetworkError) {
             Debug.Log($"Error: {www.error}");
         } else {
-            Debug.Log(www.downloadHandler.text);
-            rawExhibits = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(www.downloadHandler.text);
+            rawExhibits = JsonConvert.DeserializeObject<List<RawExhibit>>(www.downloadHandler.text);
         }
         
         var exhibits = new List<Exhibit>();
@@ -55,34 +62,23 @@ public class Network {
         foreach (var exhibit in rawExhibits) {
             var displays = new List<Display>();
 
-            for (int index = 0; index < ((List<string>)exhibit["imageUrl"]).Count; ++index) {
+            var displayCount = exhibit.imageUrl.Count;
+            var textSegmentLength = exhibit.text.Length / displayCount;
+            Debug.Log($"Exchibit text len {exhibit.text.Length}");
+            for (int index = 0; index < displayCount; ++index) {
                 displays.Add(new Display(
-                    ((List<string>)exhibit["imageUrl"])[index],
-                    ((List<string>)exhibit["caption"])[index],
-                    (string)exhibit["text"]
+                    exhibit.imageUrl[index],
+                    exhibit.caption[index],
+                    exhibit.text.Substring(index * textSegmentLength, textSegmentLength)
                 ));
             }
             
             exhibits.Add(new Exhibit(
-                (string)exhibit["exhibit_name"],
+                exhibit.exhibit_name,
                 displays
             ));
         }
-        
-        // TODO: Perform network request and format results.
-//        var displays = new List<Display>();
-//        displays.Add(new Display(
-//            "https://www.biography.com/.image/t_share/MTE4MDAzNDEwNzg5ODI4MTEw/barack-obama-12782369-1-402.jpg",
-//            "Obama",
-//            "He's a cool fella"
-//        ));
-//        displays.Add(new Display(
-//            "https://smhttp-ssl-42830.nexcesscdn.net/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/d/g/dg65639_3.jpg",
-//            "Minecraft Steve",
-//            "He do be chillin doe"
-//        ));
-//        exhibits.Add(new Exhibit("Text Exhibit 1", displays));
-        
+
         callback(exhibits);
     }
 }
