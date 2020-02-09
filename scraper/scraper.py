@@ -147,5 +147,8 @@ class Scraper:
             exhibit_dict = {}
 
     def get_museum(self, topic):
+        self.topics = {}
+        self.images = {}
+        self.exhibit = []
         self.get_exhibit(topic)
         return self.exhibit
