@@ -36,6 +36,12 @@ public class Controller : MonoBehaviour {
         StartCoroutine(_network.GetTopics(TopicsReady));
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Back();
+        }
+    }
+
     void resetArrays() {
         _displayOffsets = new List<Vector3> {
             new Vector3(13.9f, 0, 9),
@@ -76,6 +82,20 @@ public class Controller : MonoBehaviour {
         
         menu.SetActive(false);
         player.SetActive(true);
+    }
+
+    void Back() {
+        menu.SetActive(true);
+        player.SetActive(false);
+        player.transform.position = new Vector3(0, 5, 0);
+
+        foreach (var exhibit in GameObject.FindGameObjectsWithTag("Exhibit")) {
+            Destroy(exhibit);
+        }
+        
+        foreach (var display in GameObject.FindGameObjectsWithTag("Display")) {
+            Destroy(display);
+        }
     }
     
     IEnumerator GetTexture(string url, Action<Sprite> callback) {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4747303444327956679}
   m_Layer: 0
   m_Name: Gap Filler
-  m_TagString: Untagged
+  m_TagString: Exhibit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

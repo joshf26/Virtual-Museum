@@ -64,7 +64,6 @@ public class Network {
 
             var displayCount = exhibit.imageUrl.Count;
             var textSegmentLength = exhibit.text.Length / displayCount;
-            Debug.Log($"Exchibit text len {exhibit.text.Length}");
             for (int index = 0; index < displayCount; ++index) {
                 displays.Add(new Display(
                     exhibit.imageUrl[index],
